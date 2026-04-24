@@ -1,3 +1,4 @@
+
 public class FeetMeasurementEquality {
 
     // Method to check equality
@@ -18,6 +19,15 @@ public class FeetMeasurementEquality {
     public static void main(String[] args) {
 
         java.util.Scanner sc = new java.util.Scanner(System.in);
+=======
+import java.util.Scanner;
+
+public class FeetMeasurementEquality {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
 
         double leftFoot, rightFoot;
 
@@ -29,9 +39,23 @@ public class FeetMeasurementEquality {
         System.out.print("Enter right foot measurement: ");
         rightFoot = sc.nextDouble();
 
+
         String result = checkFeet(leftFoot, rightFoot);
 
         System.out.println("Result: " + result);
+=======
+        // Exact equality
+        if (leftFoot == rightFoot) {
+            System.out.println("Feet measurements are exactly equal.");
+        }
+        // Approximate equality (recommended)
+        else if (Math.abs(leftFoot - rightFoot) <= 0.5) {
+            System.out.println("Feet measurements are approximately equal.");
+        }
+        else {
+            System.out.println("Feet measurements are NOT equal.");
+        }
+
 
         sc.close();
     }
