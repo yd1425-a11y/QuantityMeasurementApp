@@ -9,7 +9,7 @@ public class Quantity {
         this.unit = unit.toLowerCase();
     }
 
-    // Convert everything to inches (base unit)
+    // Convert to inches (base unit)
     private double toInches() {
         switch (unit) {
             case "feet":
@@ -31,10 +31,37 @@ public class Quantity {
         }
     }
 
-    // Equality check
-    public boolean equals(Quantity other) {
-        double diff = Math.abs(this.toInches() - other.toInches());
-        return diff <= 0.5; // tolerance
+    // Convert to target unit
+    public Quantity convertTo(String targetUnit) {
+        targetUnit = targetUnit.toLowerCase();
+
+        double inches = this.toInches();
+        double convertedValue;
+
+        switch (targetUnit) {
+            case "feet":
+                convertedValue = inches / 12;
+                break;
+
+            case "inch":
+            case "inches":
+                convertedValue = inches;
+                break;
+
+            case "cm":
+                convertedValue = inches * 2.54;
+                break;
+
+            case "meter":
+            case "meters":
+                convertedValue = inches / 39.37;
+                break;
+
+            default:
+                throw new IllegalArgumentException("Invalid target unit: " + targetUnit);
+        }
+
+        return new Quantity(convertedValue, targetUnit);
     }
 
     @Override
@@ -45,13 +72,10 @@ public class Quantity {
     // Demo main
     public static void main(String[] args) {
 
-        Quantity q1 = new Quantity(1, "meter");
-        Quantity q2 = new Quantity(100, "cm");
+        Quantity q = new Quantity(1, "meter");
 
-        if (q1.equals(q2)) {
-            System.out.println("Quantities are equal");
-        } else {
-            System.out.println("Quantities are NOT equal");
-        }
+        Quantity result = q.convertTo("feet");
+
+        System.out.println(q + " = " + result);
     }
 }
