@@ -6,19 +6,28 @@ public class Quantity {
     // Constructor
     public Quantity(double value, String unit) {
         this.value = value;
-        this.unit = unit;
+        this.unit = unit.toLowerCase();
     }
 
-    // Convert everything to inches for comparison
+    // Convert everything to inches (base unit)
     private double toInches() {
-        switch (unit.toLowerCase()) {
+        switch (unit) {
             case "feet":
                 return value * 12;
+
             case "inch":
             case "inches":
                 return value;
+
+            case "cm":
+                return value / 2.54;
+
+            case "meter":
+            case "meters":
+                return value * 39.37;
+
             default:
-                throw new IllegalArgumentException("Invalid unit");
+                throw new IllegalArgumentException("Invalid unit: " + unit);
         }
     }
 
@@ -33,11 +42,11 @@ public class Quantity {
         return value + " " + unit;
     }
 
-    // Main method (optional demo)
+    // Demo main
     public static void main(String[] args) {
 
-        Quantity q1 = new Quantity(2, "feet");
-        Quantity q2 = new Quantity(24, "inches");
+        Quantity q1 = new Quantity(1, "meter");
+        Quantity q2 = new Quantity(100, "cm");
 
         if (q1.equals(q2)) {
             System.out.println("Quantities are equal");
